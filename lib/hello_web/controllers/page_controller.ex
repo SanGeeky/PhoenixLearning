@@ -8,6 +8,22 @@ defmodule HelloWeb.PageController do
     |> render("index.html")
   end
 
+  # def show(conn, _params) do
+  #   page = %{title: "foo"}
+
+  #   render(conn, "show.json", page: page)
+  # end
+
+  # def index(conn, _params) do
+  #   pages = [%{title: "foo"}, %{title: "bar"}]
+
+  #   render(conn, "index.json", pages: pages)
+  # end
+
+  def test(conn, _params) do
+    render(conn, "test2.html")
+  end
+
   # def index(conn, _params) do
   #   conn
   #   |> put_layout("admin.html")
