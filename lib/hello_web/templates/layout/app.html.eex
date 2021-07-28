@@ -26,8 +26,31 @@
     </header>
     <main role="main" class="container">
       <p>Locale: <%= @locale %></p>
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <div>
+        <span style="display: inline-block;">
+          <a href="<%= Routes.page_path(@conn, :index) %>">
+            Home
+          </a>
+        </span>
+        -
+        <span style="display: inline-block;">
+          <a href="<%= Routes.user_path(@conn, :index) %>">
+            Users
+          </a>
+        </span>
+        -
+        <span style="display: inline-block;">
+          <a href="<%= Routes.cms_page_path(@conn, :index) %>">
+            Pages
+          </a>
+        </span>
+        -
+        <span style="display: inline-block;">
+          <a href="<%= Routes.session_path(@conn, :new) %>">
+            Session
+          </a>
+        </span>
+      </div>
       <%= @inner_content %>
     </main>
   </body>
