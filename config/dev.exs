@@ -4,7 +4,7 @@ use Mix.Config
 config :hello, Hello.Repo,
   username: "sangeeky",
   password: "elixir12",
-  database: "hello_dev",
+  database: "hello_dev_test",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
