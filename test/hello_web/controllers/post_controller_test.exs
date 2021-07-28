@@ -31,7 +31,7 @@ defmodule HelloWeb.PostControllerTest do
       conn = post(conn, Routes.post_path(conn, :create), post: @create_attrs)
 
       assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == Routes.ost_path(conn, :show, id)
+      assert redirected_to(conn) == Routes.post_path(conn, :show, id)
 
       conn = get(conn, Routes.post_path(conn, :show, id))
       assert html_response(conn, 200) =~ "Show Post"
