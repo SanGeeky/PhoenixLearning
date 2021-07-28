@@ -1,8 +1,8 @@
-defmodule Hello.Blog.Post do
+defmodule Hello.News.Article do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "posts" do
+  schema "articles" do
     field :body, :string
     field :title, :string
 
@@ -10,10 +10,9 @@ defmodule Hello.Blog.Post do
   end
 
   @doc false
-  def changeset(post, attrs) do
-    post
+  def changeset(article, attrs) do
+    article
     |> cast(attrs, [:title, :body])
     |> validate_required([:title, :body])
-    |> validate_length(:title, min: 2)
   end
 end

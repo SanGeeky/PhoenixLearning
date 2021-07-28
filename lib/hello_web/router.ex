@@ -2,7 +2,7 @@ defmodule HelloWeb.Router do
   use HelloWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["html", "json"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
@@ -22,7 +22,9 @@ defmodule HelloWeb.Router do
 
     resources "/posts", PostController
     resources "/comments", CommentController
+    resources "/articles", ArticleController, except: [:new, :edit]
   end
+
 
   # Other scopes may use custom stacks.
   # scope "/api", HelloWeb do
