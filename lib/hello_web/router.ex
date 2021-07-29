@@ -24,48 +24,23 @@ defmodule HelloWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    # get "/redirect_test", PageController, :redirect_test
-    get "/test", PageController, :test
-
-    get "/hello", HelloController, :index
-    get "/hello/:messenger", HelloController, :show
     resources "/users", UserController
-    resources "/posts", PostController, only: [:index, :show]
 
-    # Nested
-    resources "/users", UserController do
-      resources "/posts", PostController
-    end
+    resources "/sessions", SessionController,
+      only: [:new, :create, :delete],
+      singleton: true
+  end
+
+  scope "/cms", HelloWeb.CMS, as: :cms do
+    pipe_through [:browser, :authenticate_user]
+
+    resources "/pages", PageController
   end
 
   # scope "/" do
   #   pipe_through [:authenticate_user, :ensure_admin]
   #   forward "/jobs", BackgroundJob.Plug
   # end
-
-  scope "/reviews", HelloWeb do
-    pipe_through [:review_checks]
-
-    resources "/", ReviewController
-  end
-
-  scope "/admin", HelloWeb.Admin, as: :admin do
-    pipe_through :browser
-
-    resources "/images", ImageController
-    resources "/reviews", ReviewController
-    resources "/users", UserController
-  end
-
-  scope "/api", HelloWeb.Api, as: :api do
-    pipe_through :api
-
-    scope "/v1", V1, as: :v1 do
-      resources "/images", ImageController
-      resources "/reviews", ReviewController
-      resources "/users", UserController
-    end
-  end
 
   # Other scopes may use custom stacks.
   # scope "/api", HelloWeb do
@@ -85,6 +60,18 @@ defmodule HelloWeb.Router do
     scope "/" do
       pipe_through :browser
       live_dashboard "/dashboard", metrics: HelloWeb.Telemetry
+    end
+  end
+
+  defp authenticate_user(conn, _) do
+    case get_session(conn, :user_id) do
+      nil ->
+        conn
+        |> Phoenix.Controller.put_flash(:error, "Login required")
+        |> Phoenix.Controller.redirect(to: "/")
+        |> halt()
+      user_id ->
+        assign(conn, :current_user, Hello.Accounts.get_user!(user_id))
     end
   end
 end
